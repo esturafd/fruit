@@ -6,7 +6,8 @@ this script considers cases where this is not possible, why it is prohibited or 
 ## Install
 ```bash
 git clone https://github.com/esturafd/fruit.git .fruit
-cd /usr/bin; ln -s ~/.fruit/fruit.sh fruit
+chmod 765 .fruit/fruit.sh
+cd /usr/bin; sudo ln -s ~/.fruit/fruit.sh fruit
 ```
 
 ## Use
