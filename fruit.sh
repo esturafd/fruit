@@ -6,7 +6,7 @@
 
 
 if [ -z "$FRUIT_CONFIG" ]; then
-    CONFIG_FILE="-f $FRUIT_CONFIG"
+    CONFIG_FILE="-F $FRUIT_CONFIG"
 fi
 
 export BW_SESSION=$(bw login $FRUIT_ACCOUNT --raw)
