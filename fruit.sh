@@ -46,7 +46,8 @@ if [ -n "$FRUIT_CONFIG" ]; then
     CONFIG_FILE="-F $FRUIT_CONFIG"
 fi
 
-$(dirname $([ -L $0 ] || echo $0 && readlink -f $0))/${FRUIT_PASSMANAGER}.sh
+HERE=$(dirname $([ -L $0 ] || echo $0 && readlink -f $0))
+PASSWORD=$($HERE/pamis/${FRUIT_PASSMANAGER}.sh $TARGET)
 
 case $? in
     1) echo "Unknown error in password manager" >&2; exit 1;;
@@ -54,4 +55,4 @@ case $? in
     5) echo "Password manager login error" >&2; exit 1;;
 esac
 
-sshpass -p "$PASSWORD" $EXECUTOR $CONFIG_FILE "$@"
+sshpass -p "$PASSWORD" $EXECUTOR "$@" $CONFIG_FILE $TARGET
