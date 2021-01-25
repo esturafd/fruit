@@ -46,7 +46,12 @@ if [ -n "$FRUIT_CONFIG" ]; then
     CONFIG_FILE="-F $FRUIT_CONFIG"
 fi
 
-export BW_SESSION=$(bw login $FRUIT_ACCOUNT --raw)
-PASSWORD=$(bw get password ssh:$1)
-bw logout > /dev/null &
+$(dirname $([ -L $0 ] || echo $0 && readlink -f $0))/${FRUIT_PASSMANAGER}.sh
+
+case $? in
+    1) echo "Unknown error in password manager" >&2; exit 1;;
+    2) echo "Error getting password" >&2; exit 1;;
+    5) echo "Password manager login error" >&2; exit 1;;
+esac
+
 sshpass -p "$PASSWORD" $EXECUTOR $CONFIG_FILE "$@"
